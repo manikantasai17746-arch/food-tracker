@@ -1,0 +1,416 @@
+:root {
+    --primary-color: #00d2ff;
+    --secondary-color: #3a7bd5;
+    --glass-bg: rgba(255, 255, 255, 0.2);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    --text-main: #1f2937;
+    --text-white: #ffffff;
+    --font-main: 'Outfit', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    /* Icy Blue Background Overlay + Image */
+    background: linear-gradient(135deg, rgba(200, 230, 255, 0.4), rgba(0, 50, 100, 0.2)), url('https://images.unsplash.com/photo-1543353071-87d3339120b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--text-main);
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Glassy Card */
+.profile-upload-container {
+    text-align: center;
+}
+
+.profile-preview-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 2px solid white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.upload-label {
+    cursor: pointer;
+}
+
+.delete-photo-btn {
+    color: red;
+    margin-left: 10px;
+}
+
+.hidden-input {
+    display: none;
+}
+
+/* Glassy Card - increased opacity for better readability over image */
+/* Glassy Card - "Fancy Icy" */
+.glass-card {
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(25px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 40px 0 rgba(31, 38, 135, 0.2);
+    padding: 2.5rem;
+    color: #1a1a1a;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    box-shadow: 0 15px 50px 0 rgba(31, 38, 135, 0.3);
+}
+
+.delete-btn {
+    width: 35px;
+    height: 35px;
+    background: rgba(255, 200, 200, 0.8);
+    color: #c0392b;
+    border: 1px solid rgba(255, 0, 0, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.delete-btn:hover {
+    background: #c0392b;
+    color: white;
+    transform: scale(1.1);
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+}
+
+.logo .accent {
+    color: var(--primary-color);
+}
+
+.logo-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.quote-text {
+    font-size: 0.85rem;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.goal-remaining {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin-top: 2px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-left: 1rem;
+}
+
+.icon-btn {
+    background: white;
+    border: none;
+    color: var(--text-main);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.icon-btn:hover {
+    transform: translateY(-2px);
+    background: var(--primary-color);
+    color: white;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.6);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(58, 123, 213, 0.3);
+    display: inline-block;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(58, 123, 213, 0.4);
+    filter: brightness(1.1);
+}
+
+.btn-text {
+    background: none;
+    border: none;
+    color: #333;
+    /* Darker for better contrast */
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.5rem;
+    transition: color 0.2s;
+}
+
+.btn-text:hover {
+    color: var(--secondary-color);
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+/* Auth Pages */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.auth-card {
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Dashboard Layout */
+.app-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 1rem 2rem;
+    border-radius: 20px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.user-stats-summary {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.4);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 600;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.stats-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.macro-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.stat-card {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+.stat-card.protein .stat-value {
+    color: #0052cc;
+}
+
+.stat-card.carbs .stat-value {
+    color: #d35400;
+}
+
+.stat-card.fat .stat-value {
+    color: #c0392b;
+}
+
+.section-full {
+    grid-column: 1 / -1;
+}
+
+/* Table */
+.date-picker {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    font-family: var(--font-main);
+    color: var(--text-main);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.date-picker:hover,
+.date-picker:focus {
+    background: white;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
+.chart-wrapper {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.food-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.food-table th,
+.food-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Profile */
+.profile-card {
+    max-width: 600px;
+    margin: 3rem auto;
+}
+
+.ml-1 {
+    margin-left: 1rem;
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+
+    .dashboard-grid,
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .main-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+        padding: 1.5rem;
+    }
+
+    .user-stats-summary {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .header-actions {
+        margin-left: 0;
+        justify-content: center;
+    }
+
+    .logo-section {
+        margin-bottom: 0.5rem;
+    }
+}

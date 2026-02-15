@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile | Food Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="glass-card profile-card">
+        <div class="profile-header">
+            <h2>Your Profile</h2>
+            <a href="dashboard.html" class="btn-text">Back to Dashboard</a>
+        </div>
+
+        <div class="form-group profile-upload-container">
+            <img id="profile-preview" src="https://via.placeholder.com/100" class="profile-preview-img"
+                alt="Profile Preview">
+            <br>
+            <label for="p-image" class="btn-text upload-label">Change Photo</label>
+            <button type="button" class="btn-text delete-photo-btn" onclick="clearProfilePic()">Clear</button>
+            <input id="p-image" type="file" accept="image/*" class="hidden-input" onchange="previewImage(event)" />
+        </div>
+
+        <div class="form-group">
+            <label for="p-name">Full Name</label>
+            <input id="p-name" type="text" title="Full Name" />
+        </div>
+
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="p-goal">Calories Goal</label>
+                <input id="p-goal" type="number" title="Daily Calorie Goal" />
+            </div>
+            <div class="form-group">
+                <label for="p-protein-goal">Protein Goal (g)</label>
+                <input id="p-protein-goal" type="number" title="Protein Goal" />
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="p-carbs-goal">Carbs Goal (g)</label>
+                <input id="p-carbs-goal" type="number" title="Carbs Goal" />
+            </div>
+            <div class="form-group">
+                <label for="p-fat-goal">Fat Goal (g)</label>
+                <input id="p-fat-goal" type="number" title="Fat Goal" />
+            </div>
+        </div>
+
+        <hr class="auth-hr">
+        <h3>Physical Stats</h3>
+        <br>
+
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="p-age">Age</label>
+                <input id="p-age" type="number" title="Age" placeholder="25" />
+            </div>
+            <div class="form-group">
+                <label for="p-gender">Gender</label>
+                <select id="p-gender" class="form-select" title="Gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="p-weight">Weight (kg)</label>
+                <input id="p-weight" type="number" title="Weight in kg" placeholder="70" />
+            </div>
+            <div class="form-group">
+                <label for="p-height">Height (cm)</label>
+                <input id="p-height" type="number" title="Height in cm" placeholder="175" />
+            </div>
+        </div>
+
+        <!-- 📊 BMI DISPLAY -->
+        <div class="bmi-section glass-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center;">
+            <h3 style="margin: 0 0 10px 0;">Your BMI</h3>
+            <div style="font-size: 32px; font-weight: bold; margin: 10px 0;" id="bmi-value">--</div>
+            <div style="font-size: 16px; opacity: 0.9;" id="bmi-category">Enter height and weight</div>
+        </div>
+
+        <div class="form-group">
+            <label for="p-activity">Activity Level</label>
+            <select id="p-activity" class="form-select" title="Activity Level">
+                <option value="sedentary">Sedentary (Little/no exercise)</option>
+                <option value="light">Lightly Active (1-3 days/week)</option>
+                <option value="moderate">Moderately Active (3-5 days/week)</option>
+                <option value="active">Very Active (6-7 days/week)</option>
+            </select>
+        </div>
+
+        <button class="btn-primary btn-block" onclick="saveProfile()">Save Changes</button>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", loadProfile);
+    </script>
+</body>
+
+</html>

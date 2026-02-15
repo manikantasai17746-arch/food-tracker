@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fresh Health | Food Tracker</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- 🔐 LOGIN SECTION -->
+
+
+    <!-- 🌱 MAIN APP -->
+    <div class="app-container">
+
+        <!-- HEADER -->
+        <!-- HEADER -->
+        <header class="main-header">
+            <div class="logo-section">
+                <h1>Fresh<span class="accent">Health</span></h1>
+                <div id="quote-box" class="quote-text">"Health is wealth!"</div>
+            </div>
+            <div class="user-stats-summary">
+                <div class="profile-section">
+                    <img id="header-profile-pic" src="https://via.placeholder.com/40" class="profile-avatar"
+                        alt="Profile">
+                    <div class="goal-info">
+                        <span id="daily-goal-label">2000</span> kcal Goal
+                        <div id="goal-display" class="goal-remaining"></div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <a href="profile.html" class="icon-btn" title="Profile"><i class="fa-solid fa-user"></i></a>
+                    <button class="icon-btn" onclick="logout()" title="Logout"><i
+                            class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-grid">
+
+            <!-- ➕ ADD FOOD -->
+            <section class="glass-card input-section">
+                <h2>Add Food Item</h2>
+
+                <form id="food-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Food Name</label>
+                            <input id="food-name" type="text" placeholder="e.g. Rice, Egg" list="food-list" required />
+                            <datalist id="food-list"></datalist>
+                        </div>
+                        <div class="form-group">
+                            <label>Weight (g)</label>
+                            <input id="food-weight" type="number" placeholder="grams" min="1" required />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Calories (Auto)</label>
+                            <input id="food-cal" type="number" placeholder="kcal" min="0" readonly style="background: #f0f0f0;" />
+                        </div>
+                        <div class="form-group">
+                            <label>Protein (g) (Auto)</label>
+                            <input id="food-protein" type="number" min="0" placeholder="grams" readonly style="background: #f0f0f0;" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Carbs (g) (Auto)</label>
+                            <input id="food-carbs" type="number" min="0" placeholder="grams" readonly style="background: #f0f0f0;" />
+                        </div>
+                        <div class="form-group">
+                            <label>Fat (g) (Auto)</label>
+                            <input id="food-fat" type="number" min="0" placeholder="grams" readonly style="background: #f0f0f0;" />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Add to Log</button>
+                </form>
+            </section>
+
+            <!-- 📊 STATS -->
+            <section class="stats-container">
+
+                <div class="macro-cards">
+                    <div class="glass-card stat-card">
+                        <h3>Calories</h3>
+                        <p class="stat-value" id="total-cals">0</p>
+                        <p class="stat-label">eaten</p>
+                    </div>
+
+                    <div class="glass-card stat-card protein">
+                        <h3>Protein</h3>
+                        <p class="stat-value" id="total-protein">0g</p>
+                    </div>
+
+                    <div class="glass-card stat-card carbs">
+                        <h3>Carbs</h3>
+                        <p class="stat-value" id="total-carbs">0g</p>
+                    </div>
+
+                    <div class="glass-card stat-card fat">
+                        <h3>Fat</h3>
+                        <p class="stat-value" id="total-fat">0g</p>
+                    </div>
+                </div>
+
+                <!-- 🎯 REMAINING TO EAT -->
+                <div class="macro-cards">
+                    <div class="glass-card stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        <h3>Remaining Calories</h3>
+                        <p class="stat-value" id="remaining-cals">0</p>
+                        <p class="stat-label">left today</p>
+                    </div>
+
+                    <div class="glass-card stat-card protein" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+                        <h3>Remaining Protein</h3>
+                        <p class="stat-value" id="remaining-protein">0g</p>
+                    </div>
+
+                    <div class="glass-card stat-card carbs" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
+                        <h3>Remaining Carbs</h3>
+                        <p class="stat-value" id="remaining-carbs">0g</p>
+                    </div>
+
+                    <div class="glass-card stat-card fat" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white;">
+                        <h3>Remaining Fat</h3>
+                        <p class="stat-value" id="remaining-fat">0g</p>
+                    </div>
+                </div>
+
+                <div class="glass-card chart-card">
+                    <h2>Macro Breakdown</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="macroChart"></canvas>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- 🍽️ MEAL SUGGESTIONS -->
+            <section class="glass-card section-full" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                <h2>🍽️ What to Eat Next?</h2>
+                <p id="current-meal-time" style="font-size: 1.1rem; margin: 10px 0;">Current Meal Time: <strong id="meal-time-display">Loading...</strong></p>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                    <!-- Suggested Meal -->
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px;">
+                        <h3 style="margin-top: 0;">📌 Suggested Meal Type</h3>
+                        <p id="suggested-meal-type" style="font-size: 1.3rem; font-weight: bold;">--</p>
+                    </div>
+                    
+                    <!-- Remaining Macros Summary -->
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px;">
+                        <h3 style="margin-top: 0;">⚡ Macros to Complete</h3>
+                        <p id="remaining-summary" style="font-size: 0.9rem; line-height: 1.8;">
+                            Loading...
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Food Suggestions -->
+                <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.15); border-radius: 10px;">
+                    <h3>💡 Recommended Foods to Eat</h3>
+                    <div id="food-suggestions" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px;">
+                        <!-- Suggestions will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Meal Plan Timeline -->
+                <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.15); border-radius: 10px;">
+                    <h3>⏰ Daily Meal Schedule</h3>
+                    <div id="meal-schedule" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 10px;">
+                        <!-- Meal schedule will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 📋 FOOD LOG -->
+            <!-- 📋 FOOD LOG -->
+            <section class="glass-card food-list-section section-full">
+                <div class="section-header">
+                    <h2>Daily Food Log</h2>
+                    <input type="date" id="date-picker" class="glass-input date-picker" title="Select Date">
+                </div>
+
+                <div class="table-container">
+                    <table class="food-table">
+                        <thead>
+                            <tr>
+                                <th>Food</th>
+                                <th>Calories</th>
+                                <th>P (g)</th>
+                                <th>C (g)</th>
+                                <th>F (g)</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="food-table-body">
+                            <!-- Dynamic rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 💧 WATER TRACKING -->
+            <section class="glass-card section-full">
+                <h2>💧 Water Intake</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div style="text-align: center;">
+                        <p style="font-size: 2rem; font-weight: bold;" id="water-glasses">0 / 8</p>
+                        <p>Glasses consumed today</p>
+                        <button class="btn-primary" onclick="addWater()" style="margin: 10px 5px;">+ Add Water</button>
+                        <button class="btn-primary" onclick="resetWater()" style="margin: 10px 5px; background: #e74c3c;">Reset</button>
+                    </div>
+                    <div style="text-align: center;">
+                        <p style="font-size: 1.5rem;">💧 Recommended: 8 glasses</p>
+                        <p style="font-size: 1rem; color: #7f8c8d;">~250ml per glass</p>
+                        <progress id="water-progress" max="8" value="0" style="width: 100%; height: 20px; margin-top: 10px;"></progress>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 🏋️ WORKOUT / EXERCISE LOGGING -->
+            <section class="glass-card section-full">
+                <h2>🏋️ Workout Tracker</h2>
+                <form id="workout-form" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div class="form-group">
+                        <label>Exercise Type</label>
+                        <select id="exercise-type" required>
+                            <option value="">Select Exercise</option>
+                            <option value="running">Running</option>
+                            <option value="cycling">Cycling</option>
+                            <option value="gym">Gym Workout</option>
+                            <option value="swimming">Swimming</option>
+                            <option value="yoga">Yoga</option>
+                            <option value="walking">Walking</option>
+                            <option value="sports">Sports</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Duration (minutes)</label>
+                        <input id="exercise-duration" type="number" placeholder="30" min="1" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Intensity</label>
+                        <select id="exercise-intensity" required>
+                            <option value="light">Light</option>
+                            <option value="moderate">Moderate</option>
+                            <option value="intense">Intense</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">Log Workout</button>
+                </form>
+                <div id="workout-list" style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                    <p id="total-calories-burned">Calories Burned: 0 kcal</p>
+                </div>
+            </section>
+
+            <!-- 📈 WEIGHT TRACKING -->
+            <section class="glass-card section-full">
+                <h2>📈 Weight Tracking</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div>
+                        <div class="form-group">
+                            <label>Enter Today's Weight (kg)</label>
+                            <input id="today-weight" type="number" placeholder="70" step="0.1" min="10" />
+                        </div>
+                        <button class="btn-primary" onclick="logWeight()">Log Weight</button>
+                    </div>
+                    <div style="text-align: center;">
+                        <p style="font-size: 1.5rem; font-weight: bold;" id="weight-change">No data</p>
+                        <p>Weight change from start</p>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <canvas id="weightChart" style="max-height: 300px;"></canvas>
+                </div>
+            </section>
+
+            <!-- ⭐ FAVORITE FOODS / SAVED MEALS -->
+            <section class="glass-card section-full">
+                <h2>⭐ Favorite Foods / Meals</h2>
+                <div class="form-group">
+                    <label>Save Current Selection as Favorite</label>
+                    <input id="favorite-name" type="text" placeholder="e.g., My Breakfast, Gym Pre-Workout" />
+                    <button class="btn-primary" onclick="saveFavoriteMeal()">Save Meal</button>
+                </div>
+                <div id="favorite-meals" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 15px;">
+                    <!-- Saved meals will appear here -->
+                </div>
+            </section>
+
+            <!-- 📊 WEEKLY / MONTHLY REPORTS -->
+            <section class="glass-card section-full">
+                <h2>📊 Weekly & Monthly Reports</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div>
+                        <h3>Weekly Summary</h3>
+                        <p id="weekly-avg-cal">Avg Calories: -- kcal</p>
+                        <p id="weekly-avg-protein">Avg Protein: -- g</p>
+                        <p id="weekly-avg-carbs">Avg Carbs: -- g</p>
+                        <p id="weekly-avg-fat">Avg Fat: -- g</p>
+                    </div>
+                    <div>
+                        <h3>Monthly Summary</h3>
+                        <p id="monthly-avg-cal">Avg Calories: -- kcal</p>
+                        <p id="monthly-avg-protein">Avg Protein: -- g</p>
+                        <p id="monthly-avg-carbs">Avg Carbs: -- g</p>
+                        <p id="monthly-avg-fat">Avg Fat: -- g</p>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="exportReport()" style="margin-top: 15px; margin-right: 10px;">📥 Export Weekly Report (PDF)</button>
+                <button class="btn-primary" onclick="exportMonthlyReport()" style="margin-top: 15px; background: #3498db;">📥 Export Monthly Report (PDF)</button>
+            </section>
+
+            <!-- 🧾 RECIPES & MEAL PREP -->
+            <section class="glass-card section-full">
+                <h2>🧾 Custom Recipes</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div>
+                        <label>Recipe Name</label>
+                        <input id="recipe-name" type="text" placeholder="e.g., Protein Bowl" />
+                    </div>
+                    <div>
+                        <label>Select Foods</label>
+                        <select id="recipe-food" required>
+                            <option value="">Choose Food</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Quantity (g)</label>
+                        <input id="recipe-quantity" type="number" placeholder="100" min="1" />
+                    </div>
+                    <button class="btn-primary" onclick="addToRecipe()" style="align-self: flex-end;">Add to Recipe</button>
+                </div>
+                <button class="btn-primary" onclick="saveRecipe()" style="margin-top: 15px; background: #2ecc71;">💾 Save Recipe</button>
+                <div id="recipes-list" style="margin-top: 15px;">
+                    <!-- Saved recipes will appear here -->
+                </div>
+            </section>
+
+            <!-- 🥗 DIET PLAN TEMPLATES -->
+            <section class="glass-card section-full">
+                <h2>🥗 Diet Plans</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; cursor: pointer;" onclick="selectDietPlan('balanced')">
+                        <h3>⚖️ Balanced Diet</h3>
+                        <p>40% Carbs, 30% Protein, 30% Fat</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; cursor: pointer;" onclick="selectDietPlan('keto')">
+                        <h3>🥓 Keto Diet</h3>
+                        <p>5% Carbs, 35% Protein, 60% Fat</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; cursor: pointer;" onclick="selectDietPlan('lowcarb')">
+                        <h3>🥬 Low Carb</h3>
+                        <p>25% Carbs, 35% Protein, 40% Fat</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; cursor: pointer;" onclick="selectDietPlan('highprotein')">
+                        <h3>🍗 High Protein</h3>
+                        <p>35% Carbs, 45% Protein, 20% Fat</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; cursor: pointer;" onclick="selectDietPlan('vegan')">
+                        <h3>🌱 Vegan</h3>
+                        <p>No animal products</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; cursor: pointer;" onclick="selectDietPlan('lowfat')">
+                        <h3>🍎 Low Fat</h3>
+                        <p>55% Carbs, 25% Protein, 20% Fat</p>
+                    </div>
+                </div>
+                <p id="selected-diet" style="margin-top: 15px; font-size: 1.1rem; color: #667eea; font-weight: bold;">Selected Diet: None</p>
+            </section>
+
+            <!-- 🔥 CALORIE BURN CALCULATOR -->
+            <section class="glass-card section-full">
+                <h2>🔥 Calorie Burn Calculator (BMR & TDEE)</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                        <h4>Your BMR</h4>
+                        <p style="font-size: 1.8rem; font-weight: bold;" id="bmr-value">-- kcal</p>
+                        <p style="font-size: 0.9rem; color: #7f8c8d;">Calories at rest per day</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                        <h4>Your TDEE</h4>
+                        <p style="font-size: 1.8rem; font-weight: bold;" id="tdee-value">-- kcal</p>
+                        <p style="font-size: 0.9rem; color: #7f8c8d;">Total daily energy expenditure</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                        <h4>Calorie Goal</h4>
+                        <p style="font-size: 1.8rem; font-weight: bold;" id="goal-value">-- kcal</p>
+                        <p style="font-size: 0.9rem; color: #7f8c8d;">Recommended for you</p>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; padding: 15px; background: #ecf0f1; border-radius: 8px;">
+                    <h4>About Your Stats:</h4>
+                    <p id="bmr-explanation" style="font-size: 0.95rem; line-height: 1.6;">Load your profile to calculate BMR...</p>
+                </div>
+            </section>
+
+            <!-- 🌙 DARK MODE TOGGLE (in header already, shown here for completeness) -->
+            <section class="glass-card section-full" style="text-align: center; padding: 20px;">
+                <h3>🌙 Theme</h3>
+                <label style="display: inline-flex; align-items: center; cursor: pointer;">
+                    <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()" style="margin-right: 10px; width: 20px; height: 20px;" />
+                    <span>Enable Dark Mode</span>
+                </label>
+                <p style="font-size: 0.9rem; color: #7f8c8d; margin-top: 10px;">Switch between light and dark themes</p>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- JS -->
+    <script src="script.js"></script>
+</body>
+
+</html>
